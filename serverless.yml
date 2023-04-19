@@ -1,0 +1,104 @@
+service: serverless-rest-api
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-west-1
+  environment:
+    DYNAMODB_TABLE_NAME: ${self:custom.notesTableName}
+
+custom:
+  notesTableName: notes-table-${self:provider.stage}
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-offline
+
+functions:
+  createNote:
+    handler: artifacts/createNote.handler
+    name: create-note
+    memorySize: 128 # mb
+    timeout: 120 # seconds
+    events:
+      - http:
+          path: notes
+          method: POST
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:PutItem"
+        Resource: !GetAtt NotesTable.Arn
+  getNotes:
+    handler: artifacts/getNotes.handler
+    name: get-notes
+    memorySize: 128 # mb
+    timeout: 120 # seconds
+    events:
+      - http:
+          path: notes
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:Scan"
+        Resource: !GetAtt NotesTable.Arn
+  getNote:
+    handler: artifacts/getNote.handler
+    name: get-note
+    memorySize: 128 # mb
+    timeout: 120 # seconds
+    events:
+      - http:
+          path: notes/{noteId}
+          method: GET
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:GetItem"
+        Resource: !GetAtt NotesTable.Arn
+  updateNote:
+    handler: artifacts/updateNote.handler
+    name: update-note
+    memorySize: 128 # mb
+    timeout: 120 # seconds
+    events:
+      - http:
+          path: notes/{noteId}
+          method: PUT
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:UpdateItem"
+        Resource: !GetAtt NotesTable.Arn
+  deleteNote:
+    handler: artifacts/deleteNote.handler
+    name: delete-note
+    memorySize: 128 # mb
+    timeout: 120 # seconds
+    events:
+      - http:
+          path: notes/{noteId}
+          method: DELETE
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - "dynamodb:DeleteItem"
+        Resource: !GetAtt NotesTable.Arn
+
+resources:
+  Resources:
+    NotesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.notesTableName}
+        AttributeDefinitions:
+          - AttributeName: noteId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: noteId
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1

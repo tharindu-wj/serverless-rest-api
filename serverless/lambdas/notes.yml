@@ -1,0 +1,70 @@
+createNote:
+  handler: artifacts/createNote.handler
+  name: ${self:provider.stage}-${self:service}-createNote
+  memorySize: 128 # mb
+  timeout: 30 # seconds
+  events:
+    - http:
+        path: notes
+        method: POST
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:PutItem"
+      Resource: !GetAtt NotesTable.Arn
+getNotes:
+  handler: artifacts/getNotes.handler
+  name: ${self:provider.stage}-${self:service}-getNotes
+  memorySize: 128 # mb
+  timeout: 30 # seconds
+  events:
+    - http:
+        path: notes
+        method: GET
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:Scan"
+      Resource: !GetAtt NotesTable.Arn
+getNote:
+  handler: artifacts/getNote.handler
+  name: ${self:provider.stage}-${self:service}-getNote
+  memorySize: 128 # mb
+  timeout: 30 # seconds
+  events:
+    - http:
+        path: notes/{noteId}
+        method: GET
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:GetItem"
+      Resource: !GetAtt NotesTable.Arn
+updateNote:
+  handler: artifacts/updateNote.handler
+  name: ${self:provider.stage}-${self:service}-updateNote
+  memorySize: 128 # mb
+  timeout: 30 # seconds
+  events:
+    - http:
+        path: notes/{noteId}
+        method: PUT
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:UpdateItem"
+      Resource: !GetAtt NotesTable.Arn
+deleteNote:
+  handler: artifacts/deleteNote.handler
+  name: ${self:provider.stage}-${self:service}-deleteNote
+  memorySize: 128 # mb
+  timeout: 30 # seconds
+  events:
+    - http:
+        path: notes/{noteId}
+        method: DELETE
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "dynamodb:DeleteItem"
+      Resource: !GetAtt NotesTable.Arn

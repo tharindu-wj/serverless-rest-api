@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "dev": "sls offline start --httpPort=5000",
-    "debug": "SLS_DEBUG=* sls offline start"
+    "debug": "SLS_DEBUG=* sls offline start",
+    "deploy": "sls deploy"
   },
   "author": "Tharindu Wickramasinghe",
   "license": "MIT",
@@ -15,5 +16,10 @@
     "serverless-offline": "^12.0.4",
     "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.315.0",
+    "@aws-sdk/util-dynamodb": "^3.315.0",
+    "uuid": "^9.0.0"
   }
 }

@@ -14,6 +14,7 @@ module.exports = {
   optimization: {
     minimize: false,
   },
+  externals: ["@aws-sdk/client-dynamodb", "@aws-sdk/util-dynamodb"],
 };
 
 function buildEntries(path) {

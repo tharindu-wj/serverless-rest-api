@@ -1,4 +1,4 @@
-service: serverless-rest-api
+service: serverlessRestApi
 
 provider:
   name: aws
@@ -16,76 +16,7 @@ plugins:
   - serverless-offline
 
 functions:
-  createNote:
-    handler: artifacts/createNote.handler
-    name: create-note
-    memorySize: 128 # mb
-    timeout: 120 # seconds
-    events:
-      - http:
-          path: notes
-          method: POST
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:PutItem"
-        Resource: !GetAtt NotesTable.Arn
-  getNotes:
-    handler: artifacts/getNotes.handler
-    name: get-notes
-    memorySize: 128 # mb
-    timeout: 120 # seconds
-    events:
-      - http:
-          path: notes
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:Scan"
-        Resource: !GetAtt NotesTable.Arn
-  getNote:
-    handler: artifacts/getNote.handler
-    name: get-note
-    memorySize: 128 # mb
-    timeout: 120 # seconds
-    events:
-      - http:
-          path: notes/{noteId}
-          method: GET
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:GetItem"
-        Resource: !GetAtt NotesTable.Arn
-  updateNote:
-    handler: artifacts/updateNote.handler
-    name: update-note
-    memorySize: 128 # mb
-    timeout: 120 # seconds
-    events:
-      - http:
-          path: notes/{noteId}
-          method: PUT
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:UpdateItem"
-        Resource: !GetAtt NotesTable.Arn
-  deleteNote:
-    handler: artifacts/deleteNote.handler
-    name: delete-note
-    memorySize: 128 # mb
-    timeout: 120 # seconds
-    events:
-      - http:
-          path: notes/{noteId}
-          method: DELETE
-    iamRoleStatements:
-      - Effect: "Allow"
-        Action:
-          - "dynamodb:DeleteItem"
-        Resource: !GetAtt NotesTable.Arn
+  - ${file(serverless/lambdas/notes.yml)}
 
 resources:
   Resources:

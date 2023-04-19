@@ -1,4 +1,4 @@
-const apiResponse = (
+module.exports = (
   statusCode,
   body = {},
   headers = { "Content-Type": "application/json" }
@@ -7,7 +7,3 @@ const apiResponse = (
   body: JSON.stringify(body),
   statusCode,
 });
-
-module.exports = {
-  apiResponse,
-};

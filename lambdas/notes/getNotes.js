@@ -1,9 +1,11 @@
-const { apiResponse } = require("../../utils");
+const apiResponse = require("../../utils/apiResponse");
+const { getNotes } = require("../../services/notes");
 
 module.exports = {
   handler: async (event) => {
     try {
-      return apiResponse(200, {});
+      const items = await getNotes();
+      return apiResponse(200, { data: items });
     } catch (error) {
       return apiResponse(500, {});
     }

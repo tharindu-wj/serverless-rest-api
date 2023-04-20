@@ -1,7 +1,7 @@
 {
   "name": "serverless-rest-api",
   "version": "1.0.0",
-  "description": "AWS serverless CRUD application.",
+  "description": "AWS serverless REST API. This supports automated deployments with Serverless Framework and Github Actions.",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -22,6 +22,7 @@
     "@aws-sdk/util-dynamodb": "^3.315.0",
     "@middy/core": "^4.3.1",
     "@middy/http-json-body-parser": "^4.3.1",
+    "bunyan": "^1.8.15",
     "uuid": "^9.0.0"
   }
 }

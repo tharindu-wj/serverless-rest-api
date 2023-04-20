@@ -1,3 +1,6 @@
+/**
+ * @desc Build valid http response
+ */
 module.exports = (
   statusCode,
   body = {},

@@ -17,6 +17,7 @@ module.exports = {
   externals: ["@aws-sdk/client-dynamodb", "@aws-sdk/util-dynamodb"],
 };
 
+// Build webpack entries by folder path
 function buildEntries(path) {
   const files = fs.readdirSync(path) || [];
   return files?.reduce((accumulator, currentValue) => {

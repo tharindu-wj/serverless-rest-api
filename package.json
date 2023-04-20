@@ -7,11 +7,13 @@
     "build": "webpack",
     "dev": "sls offline start --httpPort=5000",
     "debug": "SLS_DEBUG=* sls offline start",
-    "deploy": "sls deploy"
+    "deploy": "sls deploy",
+    "test": "jest"
   },
   "author": "Tharindu Wickramasinghe",
   "license": "MIT",
   "devDependencies": {
+    "jest": "^29.5.0",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-offline": "^12.0.4",
     "webpack": "^5.79.0",

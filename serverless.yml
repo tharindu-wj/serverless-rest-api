@@ -3,8 +3,9 @@ service: serverlessRestApi
 provider:
   name: aws
   runtime: nodejs18.x
-  stage: dev
+  stage: ${opt:stage, 'dev'}
   region: us-west-1
+  endpointType: REGIONAL
   environment:
     DYNAMODB_TABLE_NAME: ${self:custom.notesTableName}
 

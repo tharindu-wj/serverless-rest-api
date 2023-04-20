@@ -28,7 +28,7 @@ This project use Serverless Framework and Github Actions for automated deploymen
 
 ### Steps to setup Github Action
 
-- Create an IAM user with below access.This role used by Serverless Framework to manage AWS resources. Note: You need to add additional access if you are adding AWS new services.
+- Create an IAM user with below access.This role used by Serverless Framework to manage AWS resources. Note: You need to add additional access if you are adding new AWS services.
 
 ```
    AmazonAPIGatewayAdministrator

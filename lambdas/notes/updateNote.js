@@ -3,6 +3,7 @@ const jsonBodyParser = require("@middy/http-json-body-parser");
 const apiResponse = require("../../utils/apiResponse");
 const { updateNote } = require("../../services/notes");
 const errorHandler = require("../../middlewares/errorHandler");
+const log = require("../../utils/logger");
 
 /**
  * @desc Update note
@@ -16,7 +17,7 @@ const flow = async (event) => {
   const body = event.body;
   const result = await updateNote(event.pathParameters.noteId, body);
   log.info("Note updated");
-  
+
   log.info("Handler completed");
   return apiResponse(200, { data: result });
 };

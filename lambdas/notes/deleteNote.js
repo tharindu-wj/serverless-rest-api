@@ -2,7 +2,7 @@ const middy = require("@middy/core");
 const apiResponse = require("../../utils/apiResponse");
 const { deleteNote } = require("../../services/notes");
 const errorHandler = require("../../middlewares/errorHandler");
-
+const log = require("../../utils/logger");
 
 /**
  * @desc Delete note
@@ -15,7 +15,7 @@ const flow = async (event) => {
 
   const result = deleteNote(event.pathParameters.noteId);
   log.info("Note deleted");
-  
+
   log.info("Handler completed");
   return apiResponse(200, { data: result });
 };

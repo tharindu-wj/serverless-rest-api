@@ -2,6 +2,7 @@ const middy = require("@middy/core");
 const apiResponse = require("../../utils/apiResponse");
 const { getNotes } = require("../../services/notes");
 const errorHandler = require("../../middlewares/errorHandler");
+const log = require("../../utils/logger");
 
 /**
  * @desc Get notes
@@ -13,7 +14,7 @@ const flow = async (event) => {
   log.debug(event, "Full event");
 
   const items = await getNotes();
-  
+
   log.info("Handler completed");
   return apiResponse(200, { data: items });
 };
